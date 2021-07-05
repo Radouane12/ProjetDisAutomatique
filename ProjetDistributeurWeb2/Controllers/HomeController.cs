@@ -23,13 +23,27 @@ namespace ProjetDistributeurWeb2.Controllers
 
         public ActionResult Index()
         {
-            throw new NotImplementedException();
+            return View(recetteService.GetAllRecette());
         }
 
         // GET: Recettes/CalculerPrixRecette/5
         public ActionResult CalculerPrixRecette(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Recette selectedRecette = recetteService.GetRecetteById((int)id);
+
+            if (selectedRecette == null)
+            {
+                return HttpNotFound();
+            }
+            RecetteViewModel RecetteVM = new RecetteViewModel() { recette = selectedRecette, prix = recetteService.CalculerPrixVente(selectedRecette) };
+
+            return View(RecetteVM);
         }
     }
 }

@@ -13,13 +13,16 @@ namespace ProjetDistributeur.Service.RecetteService
     {
         private readonly IRecetteRepository recetteRepository;
 
-   
+        public const decimal marge = 0.30M;
 
         public RecetteService(IRecetteRepository _recetteRepository)
         {
             recetteRepository = _recetteRepository;
         }
-       
+        //public RecetteService()
+        //{
+
+        //}
         /// <summary>
         /// 
         /// </summary>
@@ -27,18 +30,24 @@ namespace ProjetDistributeur.Service.RecetteService
         /// <returns>Calculer le prix de la boisson = prix coutant des recettes + marge de 30% </returns>
         public decimal CalculerPrixVente(Recette recette)
         {
-            throw new NotImplementedException();
+            decimal prix = 0M;
+            foreach (var i in recette.Ingredients)
+            {
+                prix += i.Produit.Price * i.Amount;
+            }
+            prix += prix * marge;
+            return Math.Round(prix, 2);
         }
 
         public List<Recette> GetAllRecette()
         {
 
-            throw new NotImplementedException();
+            return recetteRepository.GetAllRecette();
         }
 
         public Recette GetRecetteById(int id)
         {
-            throw new NotImplementedException();
+            return recetteRepository.GetRecetteById(id);
         }
     }
 }
