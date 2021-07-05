@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProjetDistributeur.Core.Models.Recette>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="jumbotron">
+    <h3>Distributeur automatique des boissons chaudes</h3>
+    <p class="lead">Description du distributeur automatique des boissons chaudes</p>
+</div>
+
+
+<h2>Liste des boissons</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Afficher le prix", "CalculerPrixRecette", new { id = item.IdRecette })
+            </td>
+        </tr>
+    }
+</table>
